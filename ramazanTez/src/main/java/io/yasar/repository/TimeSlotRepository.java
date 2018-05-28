@@ -20,7 +20,7 @@ public class TimeSlotRepository {
 	@PostConstruct
 	public void init() {
 		// skip first timeSlot
-		timeSlots = IntStream.range(1, Constants.TIME_SLOT_COUNT)
+		timeSlots = IntStream.range(0, Constants.TIME_SLOT_COUNT)
 				.mapToObj(TimeSlot::new).collect(Collectors.toList());
 	}
 

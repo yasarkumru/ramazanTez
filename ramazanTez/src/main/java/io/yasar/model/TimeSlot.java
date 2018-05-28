@@ -49,7 +49,6 @@ public class TimeSlot implements Cloneable{
 	
 	@Override
 	protected Object clone() throws CloneNotSupportedException {
-		// TODO Auto-generated method stub
 		return new TimeSlot(this);
 	}
 

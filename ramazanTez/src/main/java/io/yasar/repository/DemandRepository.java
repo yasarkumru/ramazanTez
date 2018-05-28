@@ -60,7 +60,7 @@ public class DemandRepository {
 	private List<Demand> constructDemands() {
 		return excelReader.getRowStreamFromSheet(1).flatMap(row -> {
 			// skip first timeSlot
-			return IntStream.range(1, Constants.TIME_SLOT_COUNT)
+			return IntStream.range(0, Constants.TIME_SLOT_COUNT)
 					.boxed()
 					.flatMap(timeSlot -> {
 				return Stream.iterate(timeSlot * Constants.STATION_COUNT + 1, j -> j + 1)
