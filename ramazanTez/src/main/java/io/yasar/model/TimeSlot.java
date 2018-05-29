@@ -46,7 +46,7 @@ public class TimeSlot implements Cloneable {
     public int getLineSideDif() {
         return tours.stream()
                 .mapToInt(tour -> tour.getDemands().stream()
-                        .mapToInt(demand -> (rank - demand.getTimeSlot().getRank())
+                        .mapToInt(demand -> (demand.getTimeSlot().getRank() - rank)
                                 * demand.getBasketSize())
                         .sum())
                 .sum();

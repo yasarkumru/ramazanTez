@@ -5,7 +5,7 @@ import java.util.List;
 
 public class Tour implements Cloneable{
 
-	private BasketType basketType;
+	private final BasketType basketType;
 	private List<Demand> demands = new ArrayList<>();
 
 	public Tour(BasketType basketType) {

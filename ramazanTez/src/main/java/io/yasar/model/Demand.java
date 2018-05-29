@@ -5,10 +5,10 @@ import java.util.List;
 
 public class Demand {
 
-	private Product product;
-	private Station station;
+	private final Product product;
+	private final Station station;
+	private final TimeSlot timeSlot;
 	private Double value;
-	private TimeSlot timeSlot;
 
 	public Demand(Product product, Station station, Double value, TimeSlot timeSlot) {
 		super();

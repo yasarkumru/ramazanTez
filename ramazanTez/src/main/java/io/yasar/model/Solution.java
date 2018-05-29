@@ -1,8 +1,8 @@
 package io.yasar.model;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import io.yasar.excel.Constants;
 
@@ -57,7 +57,9 @@ public class Solution implements Cloneable, Comparable<Solution> {
                 .stream()
                 .filter(timeSlot -> timeSlot.getTours().contains(tour))
                 .findFirst();
+
         
+        System.out.println("here");
         return findFirst.get();
     }
 
@@ -93,7 +95,9 @@ public class Solution implements Cloneable, Comparable<Solution> {
     @SuppressWarnings("unchecked")
     private Solution(Solution solution) {
         super();
-        this.timeSlots = (List<TimeSlot>) ((ArrayList<TimeSlot>) solution.timeSlots).clone();
+//        this.timeSlots = (List<TimeSlot>) ((ArrayList<TimeSlot>) solution.timeSlots).clone();
+
+        this.timeSlots = solution.getTimeSlots().stream().collect(Collectors.toList());
     }
 
     private Solution _slideTour(Tour tour) {
@@ -101,7 +105,7 @@ public class Solution implements Cloneable, Comparable<Solution> {
         int index = findIndexOfTimeSlot(timeSlotFrom);
         if (index == 0)
             return null;
-    
+
         TimeSlot timeSlotTo = getTimeSlots().get(index - 1);
         doSlide(timeSlotFrom, timeSlotTo, tour);
         return this;
