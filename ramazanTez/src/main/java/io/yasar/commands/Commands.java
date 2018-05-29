@@ -1,6 +1,7 @@
 package io.yasar.commands;
 
 import java.util.List;
+import java.util.Set;
 
 import javax.annotation.PostConstruct;
 
@@ -36,7 +37,7 @@ public class Commands {
 
     @ShellMethod("Runs the algorithm")
     public void run() {
-        List<Solution> run = calculationService.run(new Solution(timeSlotRepository.getTimeSlots()));
+        Set<Solution> run = calculationService.run(new Solution(timeSlotRepository.getTimeSlots()));
         System.out.println(run);
     }
 
