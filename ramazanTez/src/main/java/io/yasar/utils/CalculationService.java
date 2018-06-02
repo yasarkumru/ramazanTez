@@ -20,7 +20,7 @@ public class CalculationService {
         Solution current = solution;
 
         while (true) {
-
+        	System.out.println(current);
             if (current.isFeasible()) {
                 if (current.isFinished())
                     break;

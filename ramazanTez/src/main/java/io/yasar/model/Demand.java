@@ -48,7 +48,7 @@ public class Demand {
 				+ value + "]";
 	}
 
-	public int getBasketSize() {
+	public int getBasketCount() {
 		return (int) Math.ceil(value);
 	}
 

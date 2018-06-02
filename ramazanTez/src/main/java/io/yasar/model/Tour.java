@@ -2,48 +2,53 @@ package io.yasar.model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
-public class Tour implements Cloneable{
+public class Tour {
 
+	private static final AtomicInteger ID_GENERATOR = new AtomicInteger(0);
+	private final int id;
 	private final BasketType basketType;
-	private List<Demand> demands = new ArrayList<>();
+	private final List<Demand> demands;
 
 	public Tour(BasketType basketType) {
+		this.id = ID_GENERATOR.incrementAndGet();
 		this.basketType = basketType;
+		this.demands = new ArrayList<>();
 
 	}
 
-	@SuppressWarnings("unchecked")
-	private Tour(Tour tour) {
+	public Tour(Tour tour) {
+		this.id = tour.id;
 		this.basketType = tour.basketType;
-		this.demands = (List<Demand>) ((ArrayList<Demand>)tour.demands).clone();
+		this.demands = new ArrayList<>(tour.getDemands());
 	}
 
 	public void addDemand(Demand demand) {
 		demands.add(demand);
 	}
-	
+
 	public void removeDemand(Demand demand) {
-	    if(!demands.remove(demand))
-	        throw new RuntimeException("Cannot remove demand from specified tour");
+		if (!demands.remove(demand))
+			throw new RuntimeException("Cannot remove demand from specified tour");
 	}
 
 	public int getMaxCarriedBasketSize() {
 		return basketType.getMaxCarriedSize();
 	}
 
-	public int getBasketSize() {
-		return demands.stream().mapToInt(Demand::getBasketSize).sum();
+	public int getBasketCount() {
+		return demands.stream().mapToInt(Demand::getBasketCount).sum();
 	}
-	
+
 	public BasketType getBasketType() {
-        return basketType;
-    }
+		return basketType;
+	}
 
 	public boolean isFull() {
-		return getBasketSize() == getMaxCarriedBasketSize();
+		return getBasketCount() == getMaxCarriedBasketSize();
 	}
-	
+
 	public List<Demand> getDemands() {
 		return demands;
 	}
@@ -52,42 +57,52 @@ public class Tour implements Cloneable{
 		if (demand.getProduct().getBasketType() != basketType)
 			return false;
 
-		if (this.getBasketSize() + demand.getBasketSize() > getMaxCarriedBasketSize())
+		if (this.getBasketCount() + demand.getBasketCount() > getMaxCarriedBasketSize())
 			return false;
 		return true;
 	}
+
+	public boolean isFractional() {
+		final boolean isFractional = getBasketCount() < this.getMaxCarriedBasketSize();
+		if(isFractional)
+			System.out.println("FRACTIONAL TOUR FOUND");
+		return isFractional;
+	}
+
+	public void merge(Tour tour) {
+		if (!this.getBasketType().equals(tour.getBasketType()))
+			throw new RuntimeException("Cannot merge different type of basket types");
+
+		if (this.isFull())
+			return;
+
+		List<Demand> demands2 = tour.getDemands();
+		while (!demands2.isEmpty() && !this.isFull()) {
+			Demand remove = demands2.remove(0);
+			if (addable(remove)) {
+				this.addDemand(remove);
+				tour.removeDemand(remove);
+			}
+		}
+
+	}
+
+	public boolean isEmpty() {
+		return this.getBasketCount() == 0;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (!(obj instanceof Tour))
+			return false;
+		Tour t = (Tour) obj;
+		return this.id == t.id;
+	}
 	
 	@Override
-	protected Object clone() throws CloneNotSupportedException {
-		return new Tour(this);
+	public String toString() {
+		
+		return "Tour: "+getBasketCount();
 	}
-	
-	public boolean isFractional() {
-	    return getBasketSize() < this.getMaxCarriedBasketSize();
-	}
-
-    public void merge(Tour tour) {
-        if(!this.getBasketType().equals(tour.getBasketType()))
-            throw new RuntimeException("Cannot merge different type of basket types");
-        
-        if(this.isFull())
-            return;
-        
-        List<Demand> demands2 = tour.getDemands();
-        while (!demands2.isEmpty() && !this.isFull()) {
-            Demand remove = demands2.remove(0);
-            if(addable(remove)) {
-                this.addDemand(remove);
-                tour.removeDemand(remove);
-            }
-        }
-        
-    }
-
-    public boolean isEmpty() {
-        return this.getBasketSize() == 0;
-    }
-	
-	
 
 }
