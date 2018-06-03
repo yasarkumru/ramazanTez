@@ -26,7 +26,7 @@ public class TimeSlot {
 	}
 
 	public List<Tour> getTours() {
-		return tours;
+		return new ArrayList<>(tours);
 	}
 
 	/**
@@ -35,17 +35,18 @@ public class TimeSlot {
 	 * @param tour
 	 */
 	public void addTour(Tour tour) {
-		tours.stream().filter(t -> t.getBasketType().equals(tour.getBasketType()))
+		tours.stream()
+				.filter(t -> t.getBasketType().equals(tour.getBasketType()))
 				.filter(t -> !t.isFull())
 				.forEach(t -> t.merge(tour));
 
-		if (tour.getBasketCount() > 0)
+		if (!tour.isEmpty())
 			tours.add(tour);
 	}
 
 	public void addTours(List<Tour> toursToAdd) {
-		// toursToAdd.stream().forEach(this::addTour);
-		tours.addAll(toursToAdd);
+		 toursToAdd.stream().forEach(this::addTour);
+//		tours.addAll(toursToAdd);
 	}
 
 	public int getLineSideDif() {
@@ -58,7 +59,9 @@ public class TimeSlot {
 	}
 
 	public int getTourCount() {
-		return getTours().size();
+		
+		//TODO
+		return getTours().stream().mapToInt(tour -> tour.getDemands().size() >0 ? 1:0).sum();
 	}
 
 	public void removeTour(Tour tour) {

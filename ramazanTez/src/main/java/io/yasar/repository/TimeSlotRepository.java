@@ -1,6 +1,5 @@
 package io.yasar.repository;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -24,9 +23,8 @@ public class TimeSlotRepository {
 				.mapToObj(TimeSlot::new).collect(Collectors.toList());
 	}
 
-	@SuppressWarnings("unchecked")
 	public List<TimeSlot> getTimeSlots() {
-		return (List<TimeSlot>) ((ArrayList<TimeSlot>)timeSlots).clone();
+		return timeSlots;
 	}
 
 	public TimeSlot findTimeSlotByRank(Integer rank) {

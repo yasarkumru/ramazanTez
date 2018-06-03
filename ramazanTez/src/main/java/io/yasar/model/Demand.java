@@ -2,9 +2,12 @@ package io.yasar.model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class Demand {
 
+	private static final AtomicInteger ID_GENERATOR = new AtomicInteger(0);
+	private final int id;
 	private final Product product;
 	private final Station station;
 	private final TimeSlot timeSlot;
@@ -16,6 +19,15 @@ public class Demand {
 		this.station = station;
 		this.value = value;
 		this.timeSlot = timeSlot;
+		this.id = ID_GENERATOR.incrementAndGet();
+	}
+	
+	public Demand(Demand demand){
+		this.id = demand.id;
+		this.product = demand.product;
+		this.station = demand.station;
+		this.timeSlot = demand.timeSlot;
+		this.value = demand.value;
 	}
 
 	private Demand(Demand demand, Double value) {
@@ -24,6 +36,7 @@ public class Demand {
 		this.station = demand.station;
 		this.value = value;
 		this.timeSlot = demand.timeSlot;
+		this.id = ID_GENERATOR.incrementAndGet();
 	}
 
 	public Product getProduct() {
@@ -44,7 +57,7 @@ public class Demand {
 
 	@Override
 	public String toString() {
-		return "[Product: " + product.toString() + ", station: " + station.toString() + ",value: "
+		return "[Product: " + product.toString()  + ",value: "
 				+ value + "]";
 	}
 
@@ -52,6 +65,7 @@ public class Demand {
 		return (int) Math.ceil(value);
 	}
 
+	//TODO
 	public void merge(Demand demand2) {
 		if (!this.getProduct().equals(demand2.getProduct()))
 			return;
@@ -78,6 +92,14 @@ public class Demand {
 
 		}
 		return splittedDemands;
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if(!(obj instanceof Demand))
+			return false;
+		Demand demand = (Demand) obj;
+		return this.id == demand.id;
 	}
 
 	private Double getLeftOverSize() {

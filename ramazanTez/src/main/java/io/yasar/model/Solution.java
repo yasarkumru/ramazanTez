@@ -10,9 +10,19 @@ import io.yasar.excel.Constants;
  *
  * @author yasar
  */
-public class Solution implements Comparable<Solution> {
+public class Solution {
 
-	private List<TimeSlot> timeSlots;
+	public static final String ANSI_RESET = "\u001B[0m";
+	public static final String ANSI_BLACK = "\u001B[30m";
+	public static final String ANSI_RED = "\u001B[31m";
+	public static final String ANSI_GREEN = "\u001B[32m";
+	public static final String ANSI_YELLOW = "\u001B[33m";
+	public static final String ANSI_BLUE = "\u001B[34m";
+	public static final String ANSI_PURPLE = "\u001B[35m";
+	public static final String ANSI_CYAN = "\u001B[36m";
+	public static final String ANSI_WHITE = "\u001B[37m";
+
+	private final List<TimeSlot> timeSlots;
 
 	public Solution(List<TimeSlot> timeSlots) {
 		super();
@@ -60,17 +70,12 @@ public class Solution implements Comparable<Solution> {
 		return findFirst.get();
 	}
 
-	@Override
-	public int compareTo(Solution o) {
-		return o.getTotalLineSideDif() - this.getTotalLineSideDif();
-	}
-
 	public boolean isFinished() {
 		return timeSlots.stream().skip(1).flatMap(ts -> ts.getTours().stream())
 				.allMatch(to -> to.isEmpty());
 	}
 
-	private Solution(Solution solution) {
+	public Solution(Solution solution) {
 		super();
 		this.timeSlots = solution.timeSlots.stream()
 				.map(TimeSlot::new)
@@ -84,15 +89,12 @@ public class Solution implements Comparable<Solution> {
 	 * @return
 	 */
 	public Solution slideTour(Tour tour) {
-		return new Solution(this)._slideTour(tour);
+		return new Solution(this)._slideTour(new Tour(tour));
 	}
 
 	private Solution _slideTour(Tour tour) {
 		TimeSlot timeSlotFrom = findTimeSlotOfTour(tour);
 		int index = findIndexOfTimeSlot(timeSlotFrom);
-		if (index == 0)
-			return null;
-
 		TimeSlot timeSlotTo = getTimeSlots().get(index - 1);
 		doSlide(timeSlotFrom, timeSlotTo, tour);
 		return this;
@@ -106,9 +108,37 @@ public class Solution implements Comparable<Solution> {
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
-		sb.append("Solution: \n");
-		timeSlots.forEach(t -> sb.append(t).append("\n"));
+
+		sb.append("Solution: "+ isFeasible() +"\n");
+
+		timeSlots.forEach(
+				ts -> {
+					ts.getTours().forEach(t -> sb
+							.append(t.getBasketCount()).append("  "));
+					sb.append("\n");
+				});
 		return sb.toString();
+	}
+
+	public int getTotalDemandCount() {
+		return timeSlots.stream()
+				.flatMap(t -> t.getTours().stream())
+				.flatMap(t -> t.getDemands().stream())
+				.mapToInt(d -> d.getBasketCount())
+				.sum();
+	}
+
+	private static String getBasketTypeColor(Tour t) {
+		switch (t.getBasketType().getId()) {
+		case 1:
+			return ANSI_RED;
+		case 2:
+			return ANSI_BLUE;
+		case 3:
+			return ANSI_WHITE;
+		default:
+			return ANSI_GREEN;
+		}
 	}
 
 }

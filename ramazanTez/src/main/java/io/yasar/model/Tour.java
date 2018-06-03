@@ -3,6 +3,7 @@ package io.yasar.model;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Collectors;
 
 public class Tour {
 
@@ -21,16 +22,9 @@ public class Tour {
 	public Tour(Tour tour) {
 		this.id = tour.id;
 		this.basketType = tour.basketType;
-		this.demands = new ArrayList<>(tour.getDemands());
-	}
-
-	public void addDemand(Demand demand) {
-		demands.add(demand);
-	}
-
-	public void removeDemand(Demand demand) {
-		if (!demands.remove(demand))
-			throw new RuntimeException("Cannot remove demand from specified tour");
+		this.demands = tour.getDemands().stream()
+				.map(Demand::new)
+				.collect(Collectors.toList());
 	}
 
 	public int getMaxCarriedBasketSize() {
@@ -50,10 +44,10 @@ public class Tour {
 	}
 
 	public List<Demand> getDemands() {
-		return demands;
+		return new ArrayList<>(demands);
 	}
 
-	public boolean addable(Demand demand) {
+	public boolean isMergable(Demand demand) {
 		if (demand.getProduct().getBasketType() != basketType)
 			return false;
 
@@ -63,10 +57,7 @@ public class Tour {
 	}
 
 	public boolean isFractional() {
-		final boolean isFractional = getBasketCount() < this.getMaxCarriedBasketSize();
-		if(isFractional)
-			System.out.println("FRACTIONAL TOUR FOUND");
-		return isFractional;
+		return getBasketCount() < this.getMaxCarriedBasketSize();
 	}
 
 	public void merge(Tour tour) {
@@ -76,15 +67,25 @@ public class Tour {
 		if (this.isFull())
 			return;
 
-		List<Demand> demands2 = tour.getDemands();
-		while (!demands2.isEmpty() && !this.isFull()) {
-			Demand remove = demands2.remove(0);
-			if (addable(remove)) {
-				this.addDemand(remove);
-				tour.removeDemand(remove);
+		List<Demand> demandsToMerge = tour.getDemands();
+		while (!demandsToMerge.isEmpty() && !this.isFull()) {
+			Demand demandToMerge = demandsToMerge.get(0);
+			if (isMergable(demandToMerge)) {
+				this.addDemand(demandToMerge);
+				tour.removeDemand(demandToMerge);
+				demandsToMerge.remove(demandToMerge);
 			}
 		}
 
+	}
+
+	public void addDemand(Demand demand) {
+		demands.add(demand);
+	}
+
+	public void removeDemand(Demand demand) {
+		if (!demands.remove(demand))
+			throw new RuntimeException("Cannot remove demand from specified tour");
 	}
 
 	public boolean isEmpty() {
@@ -98,11 +99,11 @@ public class Tour {
 		Tour t = (Tour) obj;
 		return this.id == t.id;
 	}
-	
+
 	@Override
 	public String toString() {
-		
-		return "Tour: "+getBasketCount();
+
+		return "Tour: " + getBasketCount();
 	}
 
 }

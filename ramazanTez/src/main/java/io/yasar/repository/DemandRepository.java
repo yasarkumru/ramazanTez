@@ -52,7 +52,8 @@ public class DemandRepository {
 
 	public List<Demand> findDemandsByTimeSlotAndBasketType(TimeSlot timeSlot,
 			BasketType basketType) {
-		return demands.stream().filter(demand -> demand.getTimeSlot().equals(timeSlot))
+		return demands.stream()
+				.filter(demand -> demand.getTimeSlot().equals(timeSlot))
 				.filter(demand -> demand.getBasketType().equals(basketType))
 				.collect(Collectors.toList());
 	}
