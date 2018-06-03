@@ -19,6 +19,13 @@ public class Solution {
 		this.timeSlots = timeSlots;
 	}
 
+	public Solution(Solution solution) {
+		super();
+		this.timeSlots = solution.timeSlots.stream()
+				.map(TimeSlot::new)
+				.collect(Collectors.toList());
+	}
+
 	public List<TimeSlot> getTimeSlots() {
 		return timeSlots;
 	}
@@ -65,13 +72,6 @@ public class Solution {
 				.allMatch(to -> to.isEmpty());
 	}
 
-	public Solution(Solution solution) {
-		super();
-		this.timeSlots = solution.timeSlots.stream()
-				.map(TimeSlot::new)
-				.collect(Collectors.toList());
-	}
-
 	/**
 	 * this method is to make sure sliding is working immutable
 	 * 
@@ -92,7 +92,7 @@ public class Solution {
 
 	private static void doSlide(TimeSlot from, TimeSlot to, Tour tour) {
 		from.removeTour(tour);
-		to.addTour(tour);
+		to.mergeTour(tour);
 	}
 
 	@Override
@@ -114,13 +114,4 @@ public class Solution {
 
 		return sb.toString();
 	}
-
-	public int getTotalDemandCount() {
-		return timeSlots.stream()
-				.flatMap(t -> t.getTours().stream())
-				.flatMap(t -> t.getDemands().stream())
-				.mapToInt(d -> d.getBasketCount())
-				.sum();
-	}
-
 }

@@ -34,7 +34,7 @@ public class TimeSlot {
 	 * 
 	 * @param tour
 	 */
-	public void addTour(Tour tour) {
+	public void mergeTour(Tour tour) {
 		tours.stream()
 				.filter(t -> t.getBasketType().equals(tour.getBasketType()))
 				.filter(t -> !t.isFull())
@@ -45,8 +45,7 @@ public class TimeSlot {
 	}
 
 	public void addTours(List<Tour> toursToAdd) {
-		 toursToAdd.stream().forEach(this::addTour);
-//		tours.addAll(toursToAdd);
+		toursToAdd.stream().forEach(this::mergeTour);
 	}
 
 	public int getLineSideDif() {
@@ -59,9 +58,9 @@ public class TimeSlot {
 	}
 
 	public int getTourCount() {
-		
-		//TODO
-		return getTours().stream().mapToInt(tour -> tour.getDemands().size() >0 ? 1:0).sum();
+		return getTours().stream()
+				.mapToInt(tour -> tour.getDemands().size() > 0 ? 1 : 0)
+				.sum();
 	}
 
 	public void removeTour(Tour tour) {

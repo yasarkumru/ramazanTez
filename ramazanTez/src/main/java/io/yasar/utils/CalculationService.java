@@ -53,6 +53,8 @@ public class CalculationService {
 				.filter(Tour::isFractional)
 				.map(current::slideTour)
 				.sorted((s1, s2) -> {
+					if(s1.getTotalTourCount() == s2.getTotalTourCount())
+						return s1.getTotalLineSideDif() - s2.getTotalLineSideDif();
 					return s1.getTotalTourCount() - s2.getTotalTourCount();
 				})
 				.findFirst();

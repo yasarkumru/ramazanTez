@@ -65,7 +65,6 @@ public class Demand {
 		return (int) Math.ceil(value);
 	}
 
-	//TODO
 	public void merge(Demand demand2) {
 		if (!this.getProduct().equals(demand2.getProduct()))
 			return;
