@@ -12,16 +12,6 @@ import io.yasar.excel.Constants;
  */
 public class Solution {
 
-	public static final String ANSI_RESET = "\u001B[0m";
-	public static final String ANSI_BLACK = "\u001B[30m";
-	public static final String ANSI_RED = "\u001B[31m";
-	public static final String ANSI_GREEN = "\u001B[32m";
-	public static final String ANSI_YELLOW = "\u001B[33m";
-	public static final String ANSI_BLUE = "\u001B[34m";
-	public static final String ANSI_PURPLE = "\u001B[35m";
-	public static final String ANSI_CYAN = "\u001B[36m";
-	public static final String ANSI_WHITE = "\u001B[37m";
-
 	private final List<TimeSlot> timeSlots;
 
 	public Solution(List<TimeSlot> timeSlots) {
@@ -109,12 +99,13 @@ public class Solution {
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
 
-		sb.append("Solution: "+ isFeasible() +"\n");
+		sb.append("Solution: " + isFeasible() + "\n");
 
 		timeSlots.forEach(
 				ts -> {
 					ts.getTours().forEach(t -> sb
-							.append(t.getBasketCount()).append("  "));
+							.append(t.getBasketCount())
+							.append("  "));
 					sb.append("\n");
 				});
 		return sb.toString();
@@ -126,19 +117,6 @@ public class Solution {
 				.flatMap(t -> t.getDemands().stream())
 				.mapToInt(d -> d.getBasketCount())
 				.sum();
-	}
-
-	private static String getBasketTypeColor(Tour t) {
-		switch (t.getBasketType().getId()) {
-		case 1:
-			return ANSI_RED;
-		case 2:
-			return ANSI_BLUE;
-		case 3:
-			return ANSI_WHITE;
-		default:
-			return ANSI_GREEN;
-		}
 	}
 
 }

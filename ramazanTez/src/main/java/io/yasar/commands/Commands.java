@@ -36,21 +36,10 @@ public class Commands {
 
 	@ShellMethod("Runs the algorithm")
 	public void run() {
-		List<Solution> run = calculationService.run(new Solution(timeSlotRepository.getTimeSlots()));
+		List<Solution> run = calculationService
+				.run(new Solution(timeSlotRepository.getTimeSlots()));
 		System.out.println("##### PRINTING FOUND SOLUTIONS");
-
-		run.stream()
-//				.sorted((s1,s2) -> {
-//					if(s1.getTotalTourCount() == s2.getTotalTourCount())
-//						return s1.getTotalLineSideDif() - s2.getTotalLineSideDif();
-//					return s1.getTotalTourCount() - s2.getTotalTourCount();
-//				})
-				.forEach(s -> {
-					System.out.println(s.getTotalTourCount() + " " + s.getTotalLineSideDif() +" "+s.getTotalDemandCount());
-//					System.out.println(s);
-				});
-
-		// System.out.println(run);
+		System.out.println(run);
 	}
 
 	@PostConstruct

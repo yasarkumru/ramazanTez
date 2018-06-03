@@ -25,28 +25,39 @@ public class CalculationService {
 				if (current.isFinished())
 					break;
 				solutions.add(current);
-				Optional<Solution> nextSolution = current.getTimeSlots()
-						.stream()
-						.skip(1)
-						.flatMap(ts -> ts.getTours().stream())
-						.filter(Tour::isFractional)
-						.map(current::slideTour)
-						.sorted((s1, s2) -> {
-							return s1.getTotalLineSideDif() - s2.getTotalLineSideDif();
-						})
-						.findFirst();
+				Optional<Solution> nextSolution = tryFeasible(current);
+
 				if (!nextSolution.isPresent())
 					break;
-
 				current = nextSolution.get();
 
 			} else {// if not feasible
 				TimeSlot theWorstTimeSlot = current.getTheWorstTimeSlot();
-				Solution nextSolution = trySlidingForTimeSlot(current, theWorstTimeSlot);
+				Solution nextSolution = trySlidingForTimeSlot(current, theWorstTimeSlot).get();
 				current = nextSolution;
 			}
 		}
 		return solutions;
+	}
+
+	/**
+	 * tries sliding every fractional tour in solurion. return the one that adds minimum
+	 * "line side" Runs for feasingle solutions
+	 * 
+	 * @param current
+	 * @return
+	 */
+	private static Optional<Solution> tryFeasible(Solution current) {
+		return current.getTimeSlots()
+				.stream()
+				.skip(1)
+				.flatMap(ts -> ts.getTours().stream())
+				.filter(Tour::isFractional)
+				.map(current::slideTour)
+				.sorted((s1, s2) -> {
+					return s1.getTotalLineSideDif() - s2.getTotalLineSideDif();
+				})
+				.findFirst();
 	}
 
 	/**
@@ -57,11 +68,11 @@ public class CalculationService {
 	 * @param timeSlot
 	 * @return
 	 */
-	public static Solution trySlidingForTimeSlot(Solution solution, TimeSlot timeSlot) {
+	private static Optional<Solution> trySlidingForTimeSlot(Solution solution, TimeSlot timeSlot) {
 		return timeSlot.getTours().stream()
 				.map(solution::slideTour)
 				.sorted((s1, s2) -> s1.getTotalLineSideDif() - s2.getTotalLineSideDif())
-				.findFirst().get();// fix this
+				.findFirst();// fix this
 	}
 
 }
