@@ -32,9 +32,7 @@ public class CalculationService {
 				current = nextSolution.get();
 
 			} else {// if not feasible
-				TimeSlot theWorstTimeSlot = current.getTheWorstTimeSlot();
-				Solution nextSolution = trySlidingForTimeSlot(current, theWorstTimeSlot).get();
-				current = nextSolution;
+				current = trySlidingForTimeSlot(current, current.getTheWorstTimeSlot()).get();
 			}
 		}
 		return solutions;
@@ -55,7 +53,7 @@ public class CalculationService {
 				.filter(Tour::isFractional)
 				.map(current::slideTour)
 				.sorted((s1, s2) -> {
-					return s1.getTotalLineSideDif() - s2.getTotalLineSideDif();
+					return s1.getTotalTourCount() - s2.getTotalTourCount();
 				})
 				.findFirst();
 	}

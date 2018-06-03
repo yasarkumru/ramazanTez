@@ -100,6 +100,9 @@ public class Solution {
 		StringBuilder sb = new StringBuilder();
 
 		sb.append("Solution: " + isFeasible() + "\n");
+		sb.append("Tour Count: " + getTotalTourCount())
+		.append(" Line side dif: " + getTotalLineSideDif())
+		.append("\n");
 
 		timeSlots.forEach(
 				ts -> {
@@ -108,6 +111,7 @@ public class Solution {
 							.append("  "));
 					sb.append("\n");
 				});
+
 		return sb.toString();
 	}
 
