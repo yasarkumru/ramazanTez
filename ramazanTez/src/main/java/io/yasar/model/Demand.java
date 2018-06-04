@@ -4,6 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
+/**
+ * this entity also act as basket
+ * @author yasar
+ *
+ */
 public class Demand {
 
 	private static final AtomicInteger ID_GENERATOR = new AtomicInteger(0);

@@ -67,11 +67,6 @@ public class Solution {
 		return findFirst.get();
 	}
 
-	public boolean isFinished() {
-		return timeSlots.stream().skip(1).flatMap(ts -> ts.getTours().stream())
-				.allMatch(to -> to.isEmpty());
-	}
-
 	/**
 	 * this method is to make sure sliding is working immutable
 	 * 

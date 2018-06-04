@@ -17,24 +17,12 @@ public class Product {
 		return id;
 	}
 
-	public void setId(Integer id) {
-		this.id = id;
-	}
-
 	public String getName() {
 		return name;
 	}
 
-	public void setName(String name) {
-		this.name = name;
-	}
-
 	public BasketType getBasketType() {
 		return basketType;
-	}
-
-	public void setBasketType(BasketType basketType) {
-		this.basketType = basketType;
 	}
 	
 	@Override

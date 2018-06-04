@@ -14,7 +14,6 @@ import io.yasar.model.Tour;
 public class CalculationService {
 
 	public List<Solution> run(Solution solution) {
-
 		List<Solution> solutions = new ArrayList<>();
 		List<Solution> allCurrents = new ArrayList<>();
 		Solution current = new Solution(solution);
@@ -22,15 +21,11 @@ public class CalculationService {
 		while (true) {
 			allCurrents.add(current);
 			if (current.isFeasible()) {
-				if (current.isFinished())
-					break;
 				solutions.add(current);
 				Optional<Solution> nextSolution = tryFeasible(current);
-
 				if (!nextSolution.isPresent())
 					break;
 				current = nextSolution.get();
-
 			} else {// if not feasible
 				current = trySlidingForTimeSlot(current, current.getTheWorstTimeSlot()).get();
 			}
@@ -39,8 +34,8 @@ public class CalculationService {
 	}
 
 	/**
-	 * tries sliding every fractional tour in solurion. return the one that adds minimum
-	 * "line side" Runs for feasingle solutions
+	 * tries sliding every fractional tour in the solution. returns the one that adds minimum
+	 * "tour" Runs for feasible solutions
 	 * 
 	 * @param current
 	 * @return
@@ -72,7 +67,7 @@ public class CalculationService {
 		return timeSlot.getTours().stream()
 				.map(solution::slideTour)
 				.sorted((s1, s2) -> s1.getTotalLineSideDif() - s2.getTotalLineSideDif())
-				.findFirst();// fix this
+				.findFirst();
 	}
 
 }
