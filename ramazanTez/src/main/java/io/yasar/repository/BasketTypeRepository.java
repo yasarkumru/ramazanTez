@@ -23,7 +23,9 @@ public class BasketTypeRepository {
 	}
 
 	public BasketType findBasketTypeById(Integer id) {
-		return basketTypes.stream().filter(type -> type.getId() == id).findFirst().get();
+		return basketTypes.stream()
+		        .filter(type -> type.getId() == id)
+		        .findFirst().get();
 	}
 	
 	public List<BasketType> getBasketTypes() {

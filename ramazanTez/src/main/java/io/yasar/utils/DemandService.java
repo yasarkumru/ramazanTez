@@ -15,7 +15,8 @@ public final class DemandService {
         IntStream.range(0, demands.size())
                 .forEach(i -> IntStream.range(i + 1, demands.size())
                         .forEach(j -> demands.get(i).merge(demands.get(j))));
-        return demands.stream().filter(demand -> demand.getValue() > 0)
+        return demands.stream()
+                .filter(demand -> demand.getValue() > 0)
                 .collect(Collectors.toList());
     }
 }

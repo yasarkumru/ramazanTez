@@ -15,27 +15,25 @@ import org.springframework.stereotype.Component;
 @Component
 public class ExcelReader {
 
-	
-	public Sheet createSheet(int sheetIndex) {
-		try {
-			return WorkbookFactory.create(new File(Constants.FILE_PATH)).getSheetAt(sheetIndex);
-		} catch (InvalidFormatException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		return null;
-	}
+    public Sheet createSheet(int sheetIndex) {
+        try {
+            return WorkbookFactory
+                    .create(new File(Constants.FILE_PATH))
+                    .getSheetAt(sheetIndex);
+        } catch (InvalidFormatException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 
-	public Stream<Row> getRowStreamFromSheet(int sheetIndex) {
-		Sheet sheet = createSheet(sheetIndex);
-		Iterator<Row> rowIterator = sheet.rowIterator();
-		Iterable<Row> iterable = () -> rowIterator;
-		return StreamSupport.stream(iterable.spliterator(), false)
-				.skip(1);// skip headers
-	}
+    public Stream<Row> getRowStreamFromSheet(int sheetIndex) {
+        Sheet sheet = createSheet(sheetIndex);
+        Iterator<Row> rowIterator = sheet.rowIterator();
+        Iterable<Row> iterable = () -> rowIterator;
+        return StreamSupport.stream(iterable.spliterator(), false)
+                .skip(1);// skip headers
+    }
 
-	
-
-	
 }
