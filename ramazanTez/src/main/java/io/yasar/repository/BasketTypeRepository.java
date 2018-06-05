@@ -19,7 +19,9 @@ public class BasketTypeRepository {
 		basketTypes = new ArrayList<>();
 
 		basketTypes.add(new BasketType(1, 6));
-		basketTypes.add(new BasketType(2, 6));
+		basketTypes.add(new BasketType(2, 4));
+		basketTypes.add(new BasketType(3,3));
+		basketTypes.add(new BasketType(4, 2));
 	}
 
 	public BasketType findBasketTypeById(Integer id) {
