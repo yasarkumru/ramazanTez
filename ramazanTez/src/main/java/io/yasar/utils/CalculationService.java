@@ -57,9 +57,7 @@ public class CalculationService {
                 .flatMap(ts -> ts.getTours().stream())
                 .filter(Tour::isFractional)
                 .map(current::slideTour)
-                .sorted((s1, s2) -> s1.getTotalTourCount() == s2.getTotalTourCount()
-                        ? s1.getTotalLineSideDif() - s2.getTotalLineSideDif()
-                        : s1.getTotalTourCount() - s2.getTotalTourCount())
+                .sorted((s1, s2) -> s1.getPriorityHeuristic() - s2.getPriorityHeuristic())
                 .findFirst();
     }
 

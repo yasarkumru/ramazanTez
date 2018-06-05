@@ -114,4 +114,10 @@ public class Solution {
 		return this.getTotalLineSideDif() == solution.getTotalLineSideDif() 
 				&& this.getTotalTourCount() == solution.getTotalTourCount();
 	}
+	
+	public int getPriorityHeuristic(){
+		return this.getTotalTourCount() * 100
+				+ this.getTotalLineSideDif() * 10
+				+ timeSlots.stream().mapToInt(ts -> ts.getTourCount()*ts.getRank()).sum();
+	}
 }
