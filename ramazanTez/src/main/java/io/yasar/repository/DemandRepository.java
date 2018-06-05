@@ -35,13 +35,13 @@ public class DemandRepository {
 
 	@PostConstruct
 	private void init() {
-		demands = constructDemands();
-		demands = DemandService.mergeAll(demands);
-		demands = splitDemands();
+		List<Demand> constructDemands = constructDemands();
+        List<Demand> mergeAll = DemandService.mergeAll(constructDemands);
+        demands = splitDemands(mergeAll);
 
 	}
 
-	private List<Demand> splitDemands() {
+	private static List<Demand> splitDemands(List<Demand> demands) {
 		return demands.stream().flatMap(demand -> demand.splitDemand().stream())
 				.collect(Collectors.toList());
 	}
