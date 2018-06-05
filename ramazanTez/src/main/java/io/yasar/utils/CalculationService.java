@@ -64,7 +64,9 @@ public class CalculationService {
     private static Optional<Solution> trySlidingForTimeSlot(Solution solution, TimeSlot timeSlot) {
         return timeSlot.getTours().stream()
                 .map(solution::slideTour)
-                .sorted((s1, s2) -> s1.getTotalLineSideDif() - s2.getTotalLineSideDif())
+                .sorted((s1, s2) -> s1.getTotalLineSideDif() == s2.getTotalLineSideDif()
+                        ? s1.getTotalTourCount() - s2.getTotalTourCount()
+                        : s1.getTotalLineSideDif() - s2.getTotalLineSideDif())
                 .findFirst();
     }
 
