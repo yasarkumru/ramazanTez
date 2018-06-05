@@ -25,9 +25,19 @@ public class CalculationService {
                 Optional<Solution> nextSolution = trySlidingFractionalTours(current);
                 if (!nextSolution.isPresent())
                     break;
-                current = nextSolution.get();
+                Solution nextSolutionObj = nextSolution.get();
+                if(current.isSamePerf(nextSolutionObj))
+                	break;
+                current = nextSolutionObj;
             } else {// if not feasible
-                current = trySlidingForTimeSlot(current, current.getTheWorstTimeSlot()).get();
+                Optional<Solution> nextSolution = trySlidingForTimeSlot(current, current.getTheWorstTimeSlot());
+                if(!nextSolution.isPresent())
+                	break;
+                
+                Solution nextSolutionObj = nextSolution.get();
+                if(current.isSamePerf(nextSolutionObj))
+                	break;
+				current = nextSolutionObj;
             }
         }
         return solutions;
@@ -43,7 +53,7 @@ public class CalculationService {
     private static Optional<Solution> trySlidingFractionalTours(Solution current) {
         return current.getTimeSlots()
                 .stream()
-                .skip(1)
+                .skip(2)
                 .flatMap(ts -> ts.getTours().stream())
                 .filter(Tour::isFractional)
                 .map(current::slideTour)

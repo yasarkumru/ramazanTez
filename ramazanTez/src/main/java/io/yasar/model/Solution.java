@@ -37,7 +37,7 @@ public class Solution {
 	}
 
 	public TimeSlot getTheWorstTimeSlot() {
-		return timeSlots.stream().skip(1).sorted((t1, t2) -> t1.getTourCount() == t2.getTourCount()
+		return timeSlots.stream().skip(2).sorted((t1, t2) -> t1.getTourCount() == t2.getTourCount()
 				? t2.getRank() - t1.getRank()
 				: t2.getTourCount() - t1.getTourCount())
 				.findFirst().get();
@@ -108,5 +108,10 @@ public class Solution {
 				});
 
 		return sb.toString();
+	}
+	
+	public boolean isSamePerf(Solution solution) {
+		return this.getTotalLineSideDif() == solution.getTotalLineSideDif() 
+				&& this.getTotalTourCount() == solution.getTotalTourCount();
 	}
 }
