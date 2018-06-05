@@ -20,7 +20,8 @@ public class TimeSlotRepository {
 	public void init() {
 		// skip first timeSlot
 		timeSlots = IntStream.range(0, Constants.TIME_SLOT_COUNT)
-				.mapToObj(TimeSlot::new).collect(Collectors.toList());
+				.mapToObj(TimeSlot::new)
+				.collect(Collectors.toList());
 	}
 
 	public List<TimeSlot> getTimeSlots() {

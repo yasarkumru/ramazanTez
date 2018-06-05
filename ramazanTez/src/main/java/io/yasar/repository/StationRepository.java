@@ -21,14 +21,14 @@ public class StationRepository {
 	public void init(){
 		stations = IntStream
 				.range(0, Constants.STATION_COUNT)
-				.mapToObj(index -> new Station(index))
+				.mapToObj(Station::new)
 				.collect(Collectors.toList());
 		
 	}
 
 	public Station findStationById(Integer id) {
 		return stations.stream()
-				.filter(station -> station.getId().equals(id))
+		        .filter(station -> station.getId().equals(id))
 				.findFirst().get();
 
 	}
