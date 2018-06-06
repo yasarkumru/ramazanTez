@@ -1,4 +1,4 @@
-package io.yasar.utils;
+package tr.com.metu.ramazan.utils;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -6,7 +6,7 @@ import java.util.stream.IntStream;
 
 import org.springframework.stereotype.Service;
 
-import io.yasar.model.Demand;
+import tr.com.metu.ramazan.model.Demand;
 
 @Service
 public final class DemandService {

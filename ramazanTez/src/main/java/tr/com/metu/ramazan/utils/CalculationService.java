@@ -1,4 +1,4 @@
-package io.yasar.utils;
+package tr.com.metu.ramazan.utils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,9 +6,9 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
-import io.yasar.model.Solution;
-import io.yasar.model.TimeSlot;
-import io.yasar.model.Tour;
+import tr.com.metu.ramazan.model.Solution;
+import tr.com.metu.ramazan.model.TimeSlot;
+import tr.com.metu.ramazan.model.Tour;
 
 @Service
 public class CalculationService {

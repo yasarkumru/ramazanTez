@@ -1,10 +1,10 @@
-package io.yasar.model;
+package tr.com.metu.ramazan.model;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import io.yasar.excel.Constants;
+import tr.com.metu.ramazan.excel.Constants;
 
 /**
  *

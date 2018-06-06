@@ -1,13 +1,13 @@
-package io.yasar.utils;
+package tr.com.metu.ramazan.utils;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import io.yasar.model.BasketType;
-import io.yasar.model.Demand;
-import io.yasar.model.Tour;
+import tr.com.metu.ramazan.model.BasketType;
+import tr.com.metu.ramazan.model.Demand;
+import tr.com.metu.ramazan.model.Tour;
 
 @Service
 public final class TourService {

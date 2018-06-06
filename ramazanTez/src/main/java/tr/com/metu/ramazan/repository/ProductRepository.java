@@ -1,4 +1,4 @@
-package io.yasar.repository;
+package tr.com.metu.ramazan.repository;
 
 import java.util.List;
 import java.util.function.Function;
@@ -9,8 +9,8 @@ import javax.annotation.PostConstruct;
 import org.apache.poi.ss.usermodel.Row;
 import org.springframework.stereotype.Component;
 
-import io.yasar.excel.ExcelReader;
-import io.yasar.model.Product;
+import tr.com.metu.ramazan.excel.ExcelReader;
+import tr.com.metu.ramazan.model.Product;
 
 @Component
 public class ProductRepository {

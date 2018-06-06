@@ -1,4 +1,4 @@
-package io.yasar.repository;
+package tr.com.metu.ramazan.repository;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -8,8 +8,8 @@ import javax.annotation.PostConstruct;
 
 import org.springframework.stereotype.Component;
 
-import io.yasar.excel.Constants;
-import io.yasar.model.Station;
+import tr.com.metu.ramazan.excel.Constants;
+import tr.com.metu.ramazan.model.Station;
 
 @Component
 public class StationRepository {

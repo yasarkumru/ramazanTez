@@ -1,14 +1,14 @@
-	package io.yasar;
+	package tr.com.metu.ramazan;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 
 @SpringBootApplication
-public class RamcoTezMain {
+public class RamazanTezMain {
 
 	public static void main(String[] args) {
-		SpringApplication.run(RamcoTezMain.class, args);
+		SpringApplication.run(RamazanTezMain.class, args);
 	}
 
 }

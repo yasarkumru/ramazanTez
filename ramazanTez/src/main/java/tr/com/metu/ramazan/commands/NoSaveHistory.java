@@ -1,4 +1,4 @@
-package io.yasar.commands;
+package tr.com.metu.ramazan.commands;
 
 import java.io.IOException;
 

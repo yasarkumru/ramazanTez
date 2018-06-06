@@ -1,4 +1,4 @@
-package io.yasar.commands;
+package tr.com.metu.ramazan.commands;
 
 import java.util.List;
 
@@ -7,14 +7,14 @@ import javax.annotation.PostConstruct;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
 
-import io.yasar.model.Demand;
-import io.yasar.model.Solution;
-import io.yasar.model.Tour;
-import io.yasar.repository.BasketTypeRepository;
-import io.yasar.repository.DemandRepository;
-import io.yasar.repository.TimeSlotRepository;
-import io.yasar.utils.CalculationService;
-import io.yasar.utils.TourService;
+import tr.com.metu.ramazan.model.Demand;
+import tr.com.metu.ramazan.model.Solution;
+import tr.com.metu.ramazan.model.Tour;
+import tr.com.metu.ramazan.repository.BasketTypeRepository;
+import tr.com.metu.ramazan.repository.DemandRepository;
+import tr.com.metu.ramazan.repository.TimeSlotRepository;
+import tr.com.metu.ramazan.utils.CalculationService;
+import tr.com.metu.ramazan.utils.TourService;
 
 @ShellComponent
 public class Commands {

@@ -1,4 +1,4 @@
-package io.yasar.model;
+package tr.com.metu.ramazan.model;
 
 import java.util.ArrayList;
 import java.util.List;

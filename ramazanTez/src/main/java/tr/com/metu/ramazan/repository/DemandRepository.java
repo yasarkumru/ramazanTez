@@ -1,4 +1,4 @@
-package io.yasar.repository;
+package tr.com.metu.ramazan.repository;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -9,12 +9,12 @@ import javax.annotation.PostConstruct;
 
 import org.springframework.stereotype.Component;
 
-import io.yasar.excel.Constants;
-import io.yasar.excel.ExcelReader;
-import io.yasar.model.BasketType;
-import io.yasar.model.Demand;
-import io.yasar.model.TimeSlot;
-import io.yasar.utils.DemandService;
+import tr.com.metu.ramazan.excel.Constants;
+import tr.com.metu.ramazan.excel.ExcelReader;
+import tr.com.metu.ramazan.model.BasketType;
+import tr.com.metu.ramazan.model.Demand;
+import tr.com.metu.ramazan.model.TimeSlot;
+import tr.com.metu.ramazan.utils.DemandService;
 
 @Component
 public class DemandRepository {

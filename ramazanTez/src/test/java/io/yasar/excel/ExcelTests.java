@@ -10,15 +10,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import io.yasar.RamcoTezMain;
-import io.yasar.model.Demand;
-import io.yasar.model.Product;
-import io.yasar.repository.DemandRepository;
-import io.yasar.repository.ProductRepository;
+import tr.com.metu.ramazan.RamazanTezMain;
+import tr.com.metu.ramazan.model.Demand;
+import tr.com.metu.ramazan.model.Product;
+import tr.com.metu.ramazan.repository.DemandRepository;
+import tr.com.metu.ramazan.repository.ProductRepository;
 
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = {RamcoTezMain.class})
+@ContextConfiguration(classes = {RamazanTezMain.class})
 public class ExcelTests {
 	
 	@Autowired ProductRepository productDao;

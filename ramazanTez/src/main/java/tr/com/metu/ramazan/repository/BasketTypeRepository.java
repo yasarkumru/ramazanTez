@@ -1,4 +1,4 @@
-package io.yasar.repository;
+package tr.com.metu.ramazan.repository;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -7,7 +7,7 @@ import javax.annotation.PostConstruct;
 
 import org.springframework.stereotype.Component;
 
-import io.yasar.model.BasketType;
+import tr.com.metu.ramazan.model.BasketType;
 
 @Component
 public class BasketTypeRepository {

@@ -1,4 +1,4 @@
-package io.yasar.model;
+package tr.com.metu.ramazan.model;
 
 public class Station {
 	private Integer id;
