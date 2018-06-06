@@ -22,8 +22,8 @@ public final class TourService {
 		Tour currentTour = new Tour(basketType);
 		while (!demands.isEmpty()) {
 			Demand demand = demands.get(0);
-			if(currentTour.isMergable(demand)){
-				currentTour.mergeDemand(demand);
+			if(currentTour.isAddable(demand)){
+				currentTour.addDemand(demand);
 				demands.remove(demand);
 				if(demands.isEmpty())
 					tours.add(currentTour);

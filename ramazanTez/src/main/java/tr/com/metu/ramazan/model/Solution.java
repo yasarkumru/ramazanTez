@@ -108,9 +108,14 @@ public class Solution {
 
 		timeSlots.forEach(
 				ts -> {
-					ts.getTours().forEach(t -> sb
-							.append(t.getBasketCount())
-							.append("  "));
+					ts.getTours().forEach(t -> {
+						sb
+								.append("|"+t.getBasketCount()+ "> ");
+						t.getDemands().forEach(d-> sb.append(d.getLastTimeSlot().getRank()+"="+d.getTimeSlot().getRank()+" "));
+					});
+					
+					
+//							.append("  "));
 					sb.append("\n");
 				});
 

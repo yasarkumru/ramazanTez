@@ -19,26 +19,26 @@ public class Demand {
 	private TimeSlot lastTimeSlot;
 	private Double value;
 
-	private Demand(Product product, Station station, Double value, TimeSlot timeSlot, int id) {
+	private Demand(Product product, Station station, Double value, TimeSlot timeSlot,TimeSlot lastTimeSlot, int id) {
 		this.product = product;
 		this.station = station;
 		this.value = value;
 		this.timeSlot = timeSlot;
-		this.lastTimeSlot = timeSlot;
+		this.lastTimeSlot = lastTimeSlot;
 		this.id = id;
 	}
 
 	
 	public Demand(Product product, Station station, Double value, TimeSlot timeSlot) {
-		this(product,station,value,timeSlot,ID_GENERATOR.incrementAndGet());
+		this(product,station,value,timeSlot,timeSlot,ID_GENERATOR.incrementAndGet());
 	}
 	
 	public Demand(Demand demand){
-		this(demand.product,demand.station,demand.value,demand.timeSlot,demand.id);
+		this(demand.product,demand.station,demand.value,demand.timeSlot,demand.lastTimeSlot,demand.id);
 	}
 
-	private Demand(Demand demand, Double value) {
-		this(demand.product,demand.station,value,demand.timeSlot,ID_GENERATOR.incrementAndGet());
+	private Demand(Demand demand, TimeSlot lastTimeSlot, Double value) {
+		this(demand.product,demand.station,value,demand.timeSlot,lastTimeSlot,ID_GENERATOR.incrementAndGet());
 	}
 
 	public Product getProduct() {
@@ -77,9 +77,10 @@ public class Demand {
 		if (!this.getStation().equals(demand2.getStation()))
 			return;
 
-		if (this.getRemainingValueForNextBasket() >= demand2.getLeftOverSize()) {
-			this.value += demand2.getLeftOverSize();
-			demand2.value -= demand2.getLeftOverSize();
+		if (this.getRemainingValueForNextBasket() >0 && demand2.getLeftOverSize() >0) {
+			double moveValue = Math.min(this.getRemainingValueForNextBasket(), demand2.getLeftOverSize());
+			this.value += moveValue;
+			demand2.value -= moveValue;
 			if(demand2.getLastTimeSlot().getRank() > this.getLastTimeSlot().getRank()){
 				this.lastTimeSlot = demand2.lastTimeSlot;
 			}
@@ -91,10 +92,10 @@ public class Demand {
 		List<Demand> splittedDemands = new ArrayList<>();
 		while (demandVal > 0) {
 			if (demandVal < 1) {
-				splittedDemands.add(new Demand(this, demandVal));
+				splittedDemands.add(new Demand(this,this.getTimeSlot(), new Double(demandVal)));
 				demandVal = 0d;
 			} else {
-				splittedDemands.add(new Demand(this, 1d));
+				splittedDemands.add(new Demand(this,this.getLastTimeSlot(), 1d));
 				demandVal -= 1;
 			}
 
@@ -111,7 +112,10 @@ public class Demand {
 	}
 
 	private Double getLeftOverSize() {
-		return value - value.intValue();
+		final double left = value - value.intValue();
+		if(left == 0)
+			return 1d;
+		return left;
 	}
 
 	private Double getRemainingValueForNextBasket() {

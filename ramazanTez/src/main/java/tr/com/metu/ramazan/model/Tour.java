@@ -49,7 +49,7 @@ public class Tour {
         return new ArrayList<>(demands);
     }
 
-    public boolean isMergable(Demand demand) {
+    public boolean isAddable(Demand demand) {
         if (demand.getProduct().getBasketType() != basketType)
             return false;
 
@@ -69,8 +69,8 @@ public class Tour {
         List<Demand> demandsToMerge = tour.getDemands();
         while (!demandsToMerge.isEmpty() && !this.isFull()) {
             Demand demandToMerge = demandsToMerge.get(0);
-            if (isMergable(demandToMerge)) {
-                this.mergeDemand(demandToMerge);
+            if (isAddable(demandToMerge)) {
+                this.addDemand(demandToMerge);
                 tour.removeDemand(demandToMerge);
                 demandsToMerge.remove(demandToMerge);
             }
@@ -78,7 +78,7 @@ public class Tour {
 
     }
 
-    public void mergeDemand(Demand demand) {
+    public void addDemand(Demand demand) {
         demands.add(demand);
     }
 
