@@ -39,7 +39,11 @@ public class Commands {
 		List<Solution> run = calculationService
 				.run(new Solution(timeSlotRepository.getTimeSlots()));
 		System.out.println("##### PRINTING FOUND SOLUTIONS");
-		System.out.println(run);
+		for (int i = 0; i < run.size(); i++) {
+			if (i > 0 && run.get(i).getTotalTourCount() == run.get(i - 1).getTotalTourCount())
+				continue;
+			System.out.println(run.get(i));
+		}
 	}
 
 	@PostConstruct
