@@ -6,6 +6,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * this entity also act as basket
+ * 
  * @author yasar
  *
  */
@@ -19,7 +20,8 @@ public class Demand {
 	private TimeSlot lastTimeSlot;
 	private Double value;
 
-	private Demand(Product product, Station station, Double value, TimeSlot timeSlot,TimeSlot lastTimeSlot, int id) {
+	private Demand(Product product, Station station, Double value, TimeSlot timeSlot,
+			TimeSlot lastTimeSlot, int id) {
 		this.product = product;
 		this.station = station;
 		this.value = value;
@@ -28,17 +30,18 @@ public class Demand {
 		this.id = id;
 	}
 
-	
 	public Demand(Product product, Station station, Double value, TimeSlot timeSlot) {
-		this(product,station,value,timeSlot,timeSlot,ID_GENERATOR.incrementAndGet());
+		this(product, station, value, timeSlot, timeSlot, ID_GENERATOR.incrementAndGet());
 	}
-	
-	public Demand(Demand demand){
-		this(demand.product,demand.station,demand.value,demand.timeSlot,demand.lastTimeSlot,demand.id);
+
+	public Demand(Demand demand) {
+		this(demand.product, demand.station, demand.value, demand.timeSlot, demand.lastTimeSlot,
+				demand.id);
 	}
 
 	private Demand(Demand demand, TimeSlot lastTimeSlot, Double value) {
-		this(demand.product,demand.station,value,demand.timeSlot,lastTimeSlot,ID_GENERATOR.incrementAndGet());
+		this(demand.product, demand.station, value, demand.timeSlot, lastTimeSlot,
+				ID_GENERATOR.incrementAndGet());
 	}
 
 	public Product getProduct() {
@@ -63,7 +66,7 @@ public class Demand {
 
 	@Override
 	public String toString() {
-		return "[Product: " + product.toString()  + ",value: "
+		return "[Product: " + product.toString() + ",value: "
 				+ value + "]";
 	}
 
@@ -77,11 +80,12 @@ public class Demand {
 		if (!this.getStation().equals(demand2.getStation()))
 			return;
 
-		if (this.getRemainingValueForNextBasket() >0 && demand2.getLeftOverSize() >0) {
-			double moveValue = Math.min(this.getRemainingValueForNextBasket(), demand2.getLeftOverSize());
+		if (this.getRemainingValueForNextBasket() > 0 && demand2.getLeftOverSize() > 0) {
+			double moveValue = Math.min(this.getRemainingValueForNextBasket(),
+					demand2.getLeftOverSize());
 			this.value += moveValue;
 			demand2.value -= moveValue;
-			if(demand2.getLastTimeSlot().getRank() > this.getLastTimeSlot().getRank()){
+			if (demand2.getLastTimeSlot().getRank() > this.getLastTimeSlot().getRank()) {
 				this.lastTimeSlot = demand2.lastTimeSlot;
 			}
 		}
@@ -90,22 +94,27 @@ public class Demand {
 	public List<Demand> splitDemand() {
 		Double demandVal = getValue();
 		List<Demand> splittedDemands = new ArrayList<>();
+		boolean isDif = true;
+		if (this.getTimeSlot().getRank() == this.getLastTimeSlot().getRank())
+			isDif = false;
 		while (demandVal > 0) {
-			if (demandVal < 1) {
-				splittedDemands.add(new Demand(this,this.getTimeSlot(), new Double(demandVal)));
+			if (demandVal <= 1) {
+				splittedDemands
+						.add(new Demand(this, isDif ? this.getLastTimeSlot() : this.getTimeSlot(),
+								new Double(demandVal)));
 				demandVal = 0d;
 			} else {
-				splittedDemands.add(new Demand(this,this.getLastTimeSlot(), 1d));
+				splittedDemands.add(new Demand(this,this.getTimeSlot() , 1d));
 				demandVal -= 1;
 			}
 
 		}
 		return splittedDemands;
 	}
-	
+
 	@Override
 	public boolean equals(Object obj) {
-		if(!(obj instanceof Demand))
+		if (!(obj instanceof Demand))
 			return false;
 		Demand demand = (Demand) obj;
 		return this.id == demand.id;
@@ -113,7 +122,7 @@ public class Demand {
 
 	private Double getLeftOverSize() {
 		final double left = value - value.intValue();
-		if(left == 0)
+		if (left == 0)
 			return 1d;
 		return left;
 	}
