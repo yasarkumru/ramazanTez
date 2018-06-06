@@ -19,33 +19,26 @@ public class Demand {
 	private TimeSlot lastTimeSlot;
 	private Double value;
 
-	public Demand(Product product, Station station, Double value, TimeSlot timeSlot) {
-		super();
+	private Demand(Product product, Station station, Double value, TimeSlot timeSlot, int id) {
 		this.product = product;
 		this.station = station;
 		this.value = value;
 		this.timeSlot = timeSlot;
 		this.lastTimeSlot = timeSlot;
-		this.id = ID_GENERATOR.incrementAndGet();
+		this.id = id;
+	}
+
+	
+	public Demand(Product product, Station station, Double value, TimeSlot timeSlot) {
+		this(product,station,value,timeSlot,ID_GENERATOR.incrementAndGet());
 	}
 	
 	public Demand(Demand demand){
-		this.id = demand.id;
-		this.product = demand.product;
-		this.station = demand.station;
-		this.timeSlot = demand.timeSlot;
-		this.lastTimeSlot = demand.timeSlot;
-		this.value = demand.value;
+		this(demand.product,demand.station,demand.value,demand.timeSlot,demand.id);
 	}
 
 	private Demand(Demand demand, Double value) {
-		super();
-		this.product = demand.product;
-		this.station = demand.station;
-		this.value = value;
-		this.timeSlot = demand.timeSlot;
-		this.lastTimeSlot = demand.timeSlot;
-		this.id = ID_GENERATOR.incrementAndGet();
+		this(demand.product,demand.station,value,demand.timeSlot,ID_GENERATOR.incrementAndGet());
 	}
 
 	public Product getProduct() {
@@ -88,7 +81,7 @@ public class Demand {
 			this.value += demand2.getLeftOverSize();
 			demand2.value -= demand2.getLeftOverSize();
 			if(demand2.getLastTimeSlot().getRank() > this.getLastTimeSlot().getRank()){
-				this.lastTimeSlot = demand2.getLastTimeSlot();
+				this.lastTimeSlot = demand2.lastTimeSlot;
 			}
 		}
 	}
