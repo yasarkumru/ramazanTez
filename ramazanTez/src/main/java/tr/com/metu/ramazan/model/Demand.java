@@ -16,6 +16,7 @@ public class Demand {
 	private final Product product;
 	private final Station station;
 	private final TimeSlot timeSlot;
+	private TimeSlot lastTimeSlot;
 	private Double value;
 
 	public Demand(Product product, Station station, Double value, TimeSlot timeSlot) {
@@ -24,6 +25,7 @@ public class Demand {
 		this.station = station;
 		this.value = value;
 		this.timeSlot = timeSlot;
+		this.lastTimeSlot = timeSlot;
 		this.id = ID_GENERATOR.incrementAndGet();
 	}
 	
@@ -32,6 +34,7 @@ public class Demand {
 		this.product = demand.product;
 		this.station = demand.station;
 		this.timeSlot = demand.timeSlot;
+		this.lastTimeSlot = demand.timeSlot;
 		this.value = demand.value;
 	}
 
@@ -41,6 +44,7 @@ public class Demand {
 		this.station = demand.station;
 		this.value = value;
 		this.timeSlot = demand.timeSlot;
+		this.lastTimeSlot = demand.timeSlot;
 		this.id = ID_GENERATOR.incrementAndGet();
 	}
 
@@ -58,6 +62,10 @@ public class Demand {
 
 	public TimeSlot getTimeSlot() {
 		return timeSlot;
+	}
+
+	public TimeSlot getLastTimeSlot() {
+		return lastTimeSlot;
 	}
 
 	@Override
@@ -79,6 +87,9 @@ public class Demand {
 		if (this.getRemainingValueForNextBasket() >= demand2.getLeftOverSize()) {
 			this.value += demand2.getLeftOverSize();
 			demand2.value -= demand2.getLeftOverSize();
+			if(demand2.getLastTimeSlot().getRank() > this.getLastTimeSlot().getRank()){
+				this.lastTimeSlot = demand2.getLastTimeSlot();
+			}
 		}
 	}
 

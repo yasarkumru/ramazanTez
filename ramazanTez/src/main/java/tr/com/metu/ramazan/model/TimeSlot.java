@@ -47,7 +47,7 @@ public class TimeSlot {
     public int getLineSideDif() {
         return tours.stream()
                 .flatMap(t -> t.getDemands().stream())
-                .mapToInt(demand -> ((demand.getTimeSlot().getRank() - rank) + 1)
+                .mapToInt(demand -> ((demand.getLastTimeSlot().getRank() - rank) + 1)
                         * demand.getBasketCount())
                 .sum();
     }
