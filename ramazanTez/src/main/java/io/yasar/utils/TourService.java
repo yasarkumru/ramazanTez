@@ -23,7 +23,7 @@ public final class TourService {
 		while (!demands.isEmpty()) {
 			Demand demand = demands.get(0);
 			if(currentTour.isMergable(demand)){
-				currentTour.addDemand(demand);
+				currentTour.mergeDemand(demand);
 				demands.remove(demand);
 				if(demands.isEmpty())
 					tours.add(currentTour);

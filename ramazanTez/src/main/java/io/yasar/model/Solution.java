@@ -32,23 +32,30 @@ public class Solution {
 
 	public boolean isFeasible() {
 		// skip 0th time slot
-		return timeSlots.stream().skip(1)
+		return timeSlots.stream()
+		        .skip(1)
 				.allMatch(timeSlot -> timeSlot.getTourCount() <= Constants.MAX_TOUR_PER_TIME_SLOT);
 	}
 
 	public TimeSlot getTheWorstTimeSlot() {
-		return timeSlots.stream().skip(2).sorted((t1, t2) -> t1.getTourCount() == t2.getTourCount()
+		return timeSlots.stream()
+		        .skip(2)
+		        .sorted((t1, t2) -> t1.getTourCount() == t2.getTourCount()
 				? t2.getRank() - t1.getRank()
 				: t2.getTourCount() - t1.getTourCount())
 				.findFirst().get();
 	}
 
 	public int getTotalLineSideDif() {
-		return timeSlots.stream().mapToInt(timeSlot -> timeSlot.getLineSideDif()).sum();
+		return timeSlots.stream()
+		        .mapToInt(timeSlot -> timeSlot.getLineSideDif())
+		        .sum();
 	}
 
 	public int getTotalTourCount() {
-		return timeSlots.stream().mapToInt(timeSlot -> timeSlot.getTourCount()).sum();
+		return timeSlots.stream()
+		        .mapToInt(timeSlot -> timeSlot.getTourCount())
+		        .sum();
 	}
 
 	public int findIndexOfTimeSlot(TimeSlot timeSlot) {

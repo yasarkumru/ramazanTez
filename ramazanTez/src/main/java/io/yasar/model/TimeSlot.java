@@ -40,13 +40,14 @@ public class TimeSlot {
     }
 
     public void addTours(List<Tour> toursToAdd) {
-        toursToAdd.stream().forEach(this::mergeTour);
+        toursToAdd.stream()
+                .forEach(this::mergeTour);
     }
 
     public int getLineSideDif() {
         return tours.stream()
                 .flatMap(t -> t.getDemands().stream())
-                .mapToInt(demand -> ((demand.getTimeSlot().getRank() - rank)+1)
+                .mapToInt(demand -> ((demand.getTimeSlot().getRank() - rank) + 1)
                         * demand.getBasketCount())
                 .sum();
     }
