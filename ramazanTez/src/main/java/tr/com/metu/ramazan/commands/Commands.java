@@ -1,6 +1,7 @@
 package tr.com.metu.ramazan.commands;
 
 import java.util.List;
+import java.util.stream.IntStream;
 
 import javax.annotation.PostConstruct;
 
@@ -19,48 +20,48 @@ import tr.com.metu.ramazan.utils.TourService;
 @ShellComponent
 public class Commands {
 
-	private final DemandRepository demandRepository;
-	private final TimeSlotRepository timeSlotRepository;
-	private final BasketTypeRepository basketTypeRepository;
-	private final CalculationService calculationService;
+    private final DemandRepository demandRepository;
+    private final TimeSlotRepository timeSlotRepository;
+    private final BasketTypeRepository basketTypeRepository;
+    private final CalculationService calculationService;
 
-	public Commands(DemandRepository demandRepository,
-			TimeSlotRepository timeSlotRepository,
-			BasketTypeRepository basketTypeRepository,
-			CalculationService calculationService) {
-		this.demandRepository = demandRepository;
-		this.timeSlotRepository = timeSlotRepository;
-		this.basketTypeRepository = basketTypeRepository;
-		this.calculationService = calculationService;
-	}
+    public Commands(DemandRepository demandRepository,
+            TimeSlotRepository timeSlotRepository,
+            BasketTypeRepository basketTypeRepository,
+            CalculationService calculationService) {
+        this.demandRepository = demandRepository;
+        this.timeSlotRepository = timeSlotRepository;
+        this.basketTypeRepository = basketTypeRepository;
+        this.calculationService = calculationService;
+    }
 
-	@ShellMethod("Runs the algorithm")
-	public void run() {
-		List<Solution> run = calculationService
-				.run(new Solution(timeSlotRepository.getTimeSlots()));
-		System.out.println("##### PRINTING FOUND SOLUTIONS");
-		for (int i = 0; i < run.size(); i++) {
-			if (i > 0 && run.get(i).getTotalTourCount() == run.get(i - 1).getTotalTourCount())
-				continue;
-			System.out.println(run.get(i));
-		}
-	}
+    @ShellMethod("Runs the algorithm")
+    public void run() {
+        List<Solution> solutions = calculationService
+                .run(new Solution(timeSlotRepository.getTimeSlots()));
+        System.out.println("##### PRINTING FOUND SOLUTIONS");
+        IntStream.range(0, solutions.size()).forEach(i -> {
+            if (i > 0 && solutions.get(i).getTotalTourCount() == solutions.get(i - 1).getTotalTourCount())
+                return;
+            System.out.println(solutions.get(i));
+        });
+    }
 
-	@PostConstruct
-	private void init() {
-		// add demands to timeSlots
-		timeSlotRepository.getTimeSlots().stream().forEach(timeSlot -> {
-			basketTypeRepository.getBasketTypes().stream().forEach(basketType -> {
-				List<Demand> findDemandsByTimeSlotAndBasketType = demandRepository
-						.findDemandsByTimeSlotAndBasketType(timeSlot, basketType);
+    @PostConstruct
+    private void init() {
+        // add demands to timeSlots
+        timeSlotRepository.getTimeSlots().stream().forEach(timeSlot -> {
+            basketTypeRepository.getBasketTypes().stream().forEach(basketType -> {
+                List<Demand> findDemandsByTimeSlotAndBasketType = demandRepository
+                        .findDemandsByTimeSlotAndBasketType(timeSlot, basketType);
 
-				List<Tour> tourFromDemands = TourService
-						.getToursFromDemands(findDemandsByTimeSlotAndBasketType);
-				if (tourFromDemands != null)
-					timeSlot.addTours(tourFromDemands);
+                List<Tour> tourFromDemands = TourService
+                        .getToursFromDemands(findDemandsByTimeSlotAndBasketType);
+                if (tourFromDemands != null)
+                    timeSlot.addTours(tourFromDemands);
 
-			});
-		});
+            });
+        });
 
-	}
+    }
 }

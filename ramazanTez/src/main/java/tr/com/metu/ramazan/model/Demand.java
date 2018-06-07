@@ -80,7 +80,7 @@ public class Demand {
 		if (!this.getStation().equals(demand2.getStation()))
 			return;
 
-		if (this.getRemainingValueForNextBasket() > 0 && demand2.getLeftOverSize() > 0) {
+		if (this.getRemainingValueForNextBasket() > 0) {
 			double moveValue = Math.min(this.getRemainingValueForNextBasket(),
 					demand2.getLeftOverSize());
 			this.value += moveValue;
