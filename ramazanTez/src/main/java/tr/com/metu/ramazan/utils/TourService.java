@@ -13,7 +13,7 @@ public final class TourService {
 
 	public static List<Tour> getToursFromDemands(List<Demand> demands) {
 		if(demands.isEmpty())
-			return null;
+			return new ArrayList<>();
 		List<Tour> tours = new ArrayList<>();
 		BasketType basketType = demands.get(0).getBasketType();
 		demands.sort((d1, d2) -> (int) (d2.getValue() - d1.getValue()));
