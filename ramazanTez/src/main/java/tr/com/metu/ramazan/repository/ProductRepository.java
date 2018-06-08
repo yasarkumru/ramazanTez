@@ -40,7 +40,8 @@ public class ProductRepository {
     public Product findProductById(Integer id) {
         return products.stream()
                 .filter(pro -> pro.getId().equals(id))
-                .findFirst().get();
+                .findFirst()
+                .orElseThrow(() -> new RuntimeException("Couldn't find product with the id: "+id));
     }
 
     public List<Product> getProducts() {

@@ -31,7 +31,8 @@ public class TimeSlotRepository {
 	public TimeSlot findTimeSlotByRank(Integer rank) {
 		return timeSlots.stream()
 				.filter(timeSlot -> timeSlot.getRank().equals(rank))
-				.findFirst().get();
+				.findFirst()
+				.orElseThrow(() -> new RuntimeException("Couldn't find time slot by rank: "+rank));
 	}
 
 }

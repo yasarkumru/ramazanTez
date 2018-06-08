@@ -98,6 +98,11 @@ public class Tour {
         Tour t = (Tour) obj;
         return this.id == t.id;
     }
+    
+    @Override
+    public int hashCode() {
+        return this.id;
+    }
 
     @Override
     public String toString() {

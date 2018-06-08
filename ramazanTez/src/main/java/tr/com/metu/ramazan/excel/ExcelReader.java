@@ -9,6 +9,7 @@ import java.util.stream.StreamSupport;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.springframework.stereotype.Component;
 
@@ -16,9 +17,9 @@ import org.springframework.stereotype.Component;
 public class ExcelReader {
 
     public Sheet createSheet(int sheetIndex) {
-        try {
-            return WorkbookFactory
-                    .create(new File(Constants.FILE_PATH))
+        try (Workbook create = WorkbookFactory
+                .create(new File(Constants.FILE_PATH));){
+            return create
                     .getSheetAt(sheetIndex);
         } catch (InvalidFormatException e) {
             e.printStackTrace();

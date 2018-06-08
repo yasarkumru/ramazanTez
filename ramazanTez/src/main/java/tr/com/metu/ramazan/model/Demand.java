@@ -101,7 +101,7 @@ public class Demand {
 			if (demandVal <= 1) {
 				splittedDemands
 						.add(new Demand(this, isDif ? this.getLastTimeSlot() : this.getTimeSlot(),
-								new Double(demandVal)));
+								demandVal));
 				demandVal = 0d;
 			} else {
 				splittedDemands.add(new Demand(this,this.getTimeSlot() , 1d));
@@ -118,6 +118,11 @@ public class Demand {
 			return false;
 		Demand demand = (Demand) obj;
 		return this.id == demand.id;
+	}
+	
+	@Override
+	public int hashCode() {
+	    return this.id;
 	}
 
 	private Double getLeftOverSize() {
