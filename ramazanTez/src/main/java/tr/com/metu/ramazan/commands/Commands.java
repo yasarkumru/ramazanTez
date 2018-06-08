@@ -47,18 +47,18 @@ public class Commands {
     @PostConstruct
     private void init() {
         // add demands to timeSlots
-        timeSlotRepository.getTimeSlots().stream().forEach(timeSlot -> {
-            basketTypeRepository.getBasketTypes().stream().forEach(basketType -> {
-                List<Demand> findDemandsByTimeSlotAndBasketType = demandRepository
-                        .findDemandsByTimeSlotAndBasketType(timeSlot, basketType);
+        timeSlotRepository.getTimeSlots().stream()
+                .forEach(timeSlot -> basketTypeRepository.getBasketTypes().stream()
+                        .forEach(basketType -> {
+                            List<Demand> findDemandsByTimeSlotAndBasketType = demandRepository
+                                    .findDemandsByTimeSlotAndBasketType(timeSlot, basketType);
 
-                List<Tour> tourFromDemands = TourService
-                        .getToursFromDemands(findDemandsByTimeSlotAndBasketType);
-                if (tourFromDemands != null)
-                    timeSlot.addTours(tourFromDemands);
+                            List<Tour> tourFromDemands = TourService
+                                    .getToursFromDemands(findDemandsByTimeSlotAndBasketType);
+                            if (tourFromDemands != null)
+                                timeSlot.addTours(tourFromDemands);
 
-            });
-        });
+                        }));
 
     }
 }
