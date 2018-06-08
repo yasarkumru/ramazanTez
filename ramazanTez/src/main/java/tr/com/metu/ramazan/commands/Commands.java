@@ -23,21 +23,18 @@ public class Commands {
     private final DemandRepository demandRepository;
     private final TimeSlotRepository timeSlotRepository;
     private final BasketTypeRepository basketTypeRepository;
-    private final CalculationService calculationService;
 
     public Commands(DemandRepository demandRepository,
             TimeSlotRepository timeSlotRepository,
-            BasketTypeRepository basketTypeRepository,
-            CalculationService calculationService) {
+            BasketTypeRepository basketTypeRepository) {
         this.demandRepository = demandRepository;
         this.timeSlotRepository = timeSlotRepository;
         this.basketTypeRepository = basketTypeRepository;
-        this.calculationService = calculationService;
     }
 
     @ShellMethod("Runs the algorithm")
     public void run() {
-        List<Solution> solutions = calculationService
+        List<Solution> solutions = CalculationService
                 .run(new Solution(timeSlotRepository.getTimeSlots()));
         System.out.println("##### PRINTING FOUND SOLUTIONS");
         IntStream.range(0, solutions.size()).forEach(i -> {

@@ -48,13 +48,13 @@ public class Solution {
 
     public int getTotalLineSideDif() {
         return timeSlots.stream()
-                .mapToInt(timeSlot -> timeSlot.getLineSideDif())
+                .mapToInt(TimeSlot::getLineSideDif)
                 .sum();
     }
 
     public int getTotalTourCount() {
         return timeSlots.stream()
-                .mapToInt(timeSlot -> timeSlot.getTourCount())
+                .mapToInt(TimeSlot::getTourCount)
                 .sum();
     }
 
@@ -81,10 +81,10 @@ public class Solution {
      * @return
      */
     public Solution slideTour(Tour tour) {
-        return new Solution(this)._slideTour(new Tour(tour));
+        return new Solution(this).slideTourPrivate(new Tour(tour));
     }
 
-    private Solution _slideTour(Tour tour) {
+    private Solution slideTourPrivate(Tour tour) {
         TimeSlot timeSlotFrom = findTimeSlotOfTour(tour);
         int index = findIndexOfTimeSlot(timeSlotFrom);
         TimeSlot timeSlotTo = getTimeSlots().get(index - 1);
@@ -114,8 +114,6 @@ public class Solution {
                         t.getDemands().forEach(
                                 d -> sb.append(d.getLastTimeSlot().getRank() + "=" + d.getTimeSlot().getRank() + " "));
                     });
-
-                    // .append(" "));
                     sb.append("\n");
                 });
 

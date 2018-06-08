@@ -4,12 +4,11 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-import org.springframework.stereotype.Service;
-
 import tr.com.metu.ramazan.model.Demand;
 
-@Service
 public final class DemandService {
+    
+    private DemandService() {}
 
     public static List<Demand> mergeAll(List<Demand> demands) {
         IntStream.range(0, demands.size())
