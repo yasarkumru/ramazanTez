@@ -14,6 +14,6 @@ import org.springframework.stereotype.Component;
 public class NoSaveHistory extends DefaultHistory {
     @Override
     public void save() throws IOException {
-
+        // do nothing for logging
     }
 }

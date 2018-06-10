@@ -52,10 +52,7 @@ public class Tour {
     public boolean isAddable(Demand demand) {
         if (demand.getProduct().getBasketType() != basketType)
             return false;
-
-        if (this.getBasketCount() + demand.getBasketCount() > getMaxCarriedBasketSize())
-            return false;
-        return true;
+        return this.getBasketCount() + demand.getBasketCount() <= getMaxCarriedBasketSize();
     }
 
     public boolean isFractional() {
@@ -97,6 +94,11 @@ public class Tour {
             return false;
         Tour t = (Tour) obj;
         return this.id == t.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return this.id;
     }
 
     @Override

@@ -40,14 +40,15 @@ public class ProductRepository {
     public Product findProductById(Integer id) {
         return products.stream()
                 .filter(pro -> pro.getId().equals(id))
-                .findFirst().get();
+                .findFirst()
+                .orElseThrow(() -> new RuntimeException("Couldn't find product with the id: " + id));
     }
 
     public List<Product> getProducts() {
         return products;
     }
 
-    public Function<? super Row, ? extends Product> mapperRowToProduct() {
+    public Function<Row, Product> mapperRowToProduct() {
         return row -> {
             try {
                 final int basketTypeId = (int) row.getCell(3).getNumericCellValue();

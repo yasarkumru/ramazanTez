@@ -27,7 +27,7 @@ public class BasketTypeRepository {
 	public BasketType findBasketTypeById(Integer id) {
 		return basketTypes.stream()
 		        .filter(type -> type.getId() == id)
-		        .findFirst().get();
+		        .findFirst().orElseThrow(() -> new RuntimeException("Couldn't find basket with id "+id));
 	}
 	
 	public List<BasketType> getBasketTypes() {

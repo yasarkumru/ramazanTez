@@ -4,16 +4,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.stereotype.Service;
-
 import tr.com.metu.ramazan.model.Solution;
 import tr.com.metu.ramazan.model.TimeSlot;
 import tr.com.metu.ramazan.model.Tour;
 
-@Service
-public class CalculationService {
+public final class CalculationService {
+    
+    private CalculationService() {}
 
-	public List<Solution> run(Solution solution) {
+	public static List<Solution> run(Solution solution) {
 		List<Solution> solutions = new ArrayList<>();
 		List<Solution> allCurrents = new ArrayList<>();
 		Solution current = new Solution(solution);

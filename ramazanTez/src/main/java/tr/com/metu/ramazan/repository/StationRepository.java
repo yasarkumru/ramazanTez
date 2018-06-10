@@ -14,23 +14,23 @@ import tr.com.metu.ramazan.model.Station;
 @Component
 public class StationRepository {
 
-	
-	private List<Station> stations;
-	
-	@PostConstruct
-	public void init(){
-		stations = IntStream
-				.range(0, Constants.STATION_COUNT)
-				.mapToObj(Station::new)
-				.collect(Collectors.toList());
-		
-	}
+    private List<Station> stations;
 
-	public Station findStationById(Integer id) {
-		return stations.stream()
-		        .filter(station -> station.getId().equals(id))
-				.findFirst().get();
+    @PostConstruct
+    public void init() {
+        stations = IntStream
+                .range(0, Constants.STATION_COUNT)
+                .mapToObj(Station::new)
+                .collect(Collectors.toList());
 
-	}
+    }
+
+    public Station findStationById(Integer id) {
+        return stations.stream()
+                .filter(station -> station.getId().equals(id))
+                .findFirst()
+                .orElseThrow(() -> new RuntimeException("Couldn't find station by id: " + id));
+
+    }
 
 }
