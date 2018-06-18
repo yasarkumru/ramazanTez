@@ -31,8 +31,6 @@ public final class CalculationService {
 			if (!nextSolution.isPresent())
 				break;
 			Solution nextSolutionObj = nextSolution.get();
-			if (current.isSamePerf(nextSolutionObj))
-				break;
 			current = nextSolutionObj;
 		}
 		return solutions;
