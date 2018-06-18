@@ -121,11 +121,6 @@ public class Solution {
         return sb.toString();
     }
 
-    public boolean isSamePerf(Solution solution) {
-        return this.getTotalLineSideDif() == solution.getTotalLineSideDif()
-                && this.getTotalTourCount() == solution.getTotalTourCount();
-    }
-
     public int getPriorityHeuristic() {
         return this.getTotalTourCount() * 100
                 + this.getTotalLineSideDif() * 10
