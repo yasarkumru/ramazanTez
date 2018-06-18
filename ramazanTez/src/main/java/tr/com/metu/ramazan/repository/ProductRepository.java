@@ -56,7 +56,6 @@ public class ProductRepository {
                         row.getCell(1).getStringCellValue(),
                         basketTypeRepository.findBasketTypeById(basketTypeId));
             } catch (Exception e) {
-                e.printStackTrace();
                 return null;
             }
         };
