@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
+import tr.com.metu.ramazan.exception.NotFoundException;
+
 public class Tour {
 
     private static final AtomicInteger ID_GENERATOR = new AtomicInteger(0);
@@ -61,7 +63,7 @@ public class Tour {
 
     public void merge(Tour tour) {
         if (!this.getBasketType().equals(tour.getBasketType()))
-            throw new RuntimeException("Cannot merge different type of basket types");
+            throw new NotFoundException("Cannot merge different type of basket types");
 
         List<Demand> demandsToMerge = tour.getDemands();
         while (!demandsToMerge.isEmpty() && !this.isFull()) {
@@ -81,7 +83,7 @@ public class Tour {
 
     public void removeDemand(Demand demand) {
         if (!demands.remove(demand))
-            throw new RuntimeException("Cannot remove demand from specified tour");
+            throw new NotFoundException("Cannot remove demand from specified tour");
     }
 
     public boolean isEmpty() {

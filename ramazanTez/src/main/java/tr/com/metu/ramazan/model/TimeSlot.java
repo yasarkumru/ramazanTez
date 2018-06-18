@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import tr.com.metu.ramazan.exception.NotFoundException;
+
 public class TimeSlot {
 
     private final Integer rank;
@@ -58,7 +60,7 @@ public class TimeSlot {
 
     public void removeTour(Tour tour) {
         if (!tours.remove(tour))
-            throw new RuntimeException("Cannot find specified tour in time slot!!!");
+            throw new NotFoundException("Cannot find specified tour in time slot!!!");
     }
 
     @Override

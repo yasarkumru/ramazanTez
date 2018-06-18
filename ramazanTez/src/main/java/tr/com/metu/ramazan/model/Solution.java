@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import tr.com.metu.ramazan.excel.Constants;
+import tr.com.metu.ramazan.exception.NotFoundException;
 
 /**
  *
@@ -63,7 +64,7 @@ public class Solution {
             if (timeSlot == timeSlots.get(i))
                 return i;
         }
-        throw new RuntimeException("Couldn't find TimeSlot in Solution");
+        throw new NotFoundException("Couldn't find TimeSlot in Solution");
     }
 
     private TimeSlot findTimeSlotOfTour(Tour tour) {
@@ -71,7 +72,7 @@ public class Solution {
                 .stream()
                 .filter(timeSlot -> timeSlot.getTours().contains(tour))
                 .findFirst()
-                .orElseThrow(() -> new RuntimeException("The tour is not belong to this timeSlot!!"));
+                .orElseThrow(() -> new NotFoundException("The tour is not belong to this timeSlot!!"));
     }
 
     /**
