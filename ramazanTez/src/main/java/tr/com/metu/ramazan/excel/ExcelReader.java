@@ -21,9 +21,7 @@ public class ExcelReader {
                 .create(new File(Constants.FILE_PATH));){
             return create
                     .getSheetAt(sheetIndex);
-        } catch (InvalidFormatException | IOException e) {
-            e.printStackTrace();
-        }
+        } catch (InvalidFormatException | IOException e) {}
         return null;
     }
 
