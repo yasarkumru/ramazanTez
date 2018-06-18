@@ -5,6 +5,8 @@ import java.util.stream.IntStream;
 
 import javax.annotation.PostConstruct;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
 
@@ -19,6 +21,8 @@ import tr.com.metu.ramazan.utils.TourService;
 
 @ShellComponent
 public class Commands {
+    
+    private static final Logger LOGGER = LoggerFactory.getLogger(Commands.class);
 
     private final DemandRepository demandRepository;
     private final TimeSlotRepository timeSlotRepository;
@@ -36,11 +40,10 @@ public class Commands {
     public void run() {
         List<Solution> solutions = CalculationService
                 .run(new Solution(timeSlotRepository.getTimeSlots()));
-        System.out.println("##### PRINTING FOUND SOLUTIONS");
         IntStream.range(0, solutions.size()).forEach(i -> {
             if (i > 0 && solutions.get(i).getTotalTourCount() == solutions.get(i - 1).getTotalTourCount())
                 return;
-            System.out.println(solutions.get(i));
+            LOGGER.info(solutions.get(i).toString());
         });
     }
 

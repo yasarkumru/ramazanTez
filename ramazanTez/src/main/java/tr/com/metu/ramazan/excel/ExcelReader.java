@@ -10,18 +10,22 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 @Component
 public class ExcelReader {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(ExcelReader.class);
+
     public Sheet createSheet(int sheetIndex) {
         try (Workbook create = WorkbookFactory
-                .create(new File(Constants.FILE_PATH));){
+                .create(new File(Constants.FILE_PATH));) {
             return create
                     .getSheetAt(sheetIndex);
         } catch (InvalidFormatException | IOException e) {
-            //no impl needed
+            LOGGER.error("Error while creating sheet!!", e);
         }
         return null;
     }

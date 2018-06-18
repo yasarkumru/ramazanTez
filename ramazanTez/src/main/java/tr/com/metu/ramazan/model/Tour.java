@@ -105,7 +105,6 @@ public class Tour {
 
     @Override
     public String toString() {
-
         return "Tour: " + getBasketCount();
     }
 
