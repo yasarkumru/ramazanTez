@@ -22,7 +22,7 @@ public class ExcelReader {
             return create
                     .getSheetAt(sheetIndex);
         } catch (InvalidFormatException | IOException e) {
-            e.printStackTrace();
+            //no impl needed
         }
         return null;
     }
