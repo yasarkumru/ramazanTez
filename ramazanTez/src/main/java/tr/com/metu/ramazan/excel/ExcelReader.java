@@ -2,7 +2,6 @@ package tr.com.metu.ramazan.excel;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Iterator;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
@@ -28,10 +27,8 @@ public class ExcelReader {
     }
 
     public Stream<Row> getRowStreamFromSheet(int sheetIndex) {
-        Sheet sheet = createSheet(sheetIndex);
-        Iterator<Row> rowIterator = sheet.rowIterator();
-        Iterable<Row> iterable = () -> rowIterator;
-        return StreamSupport.stream(iterable.spliterator(), false)
+        return StreamSupport
+                .stream(createSheet(sheetIndex).spliterator(), false)
                 .skip(1);// skip headers
     }
 
