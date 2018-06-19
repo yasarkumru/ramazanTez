@@ -16,7 +16,7 @@ log/
 target/
 /spring-shell.log
 /bin/
-/ProductionData0.xlsx
+/*.xlsx
 /Set8.xlsx
 /ProductionData.xlsx
 /Set6.xlsx
