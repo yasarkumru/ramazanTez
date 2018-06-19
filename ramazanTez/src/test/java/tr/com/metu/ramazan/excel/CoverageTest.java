@@ -13,6 +13,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import tr.com.metu.ramazan.RamazanTezMain;
 import tr.com.metu.ramazan.commands.Commands;
+import tr.com.metu.ramazan.exception.NotFoundException;
 import tr.com.metu.ramazan.model.Solution;
 import tr.com.metu.ramazan.repository.TimeSlotRepository;
 import tr.com.metu.ramazan.utils.CalculationService;
@@ -35,6 +36,11 @@ public class CoverageTest {
 	    
 		assertNotNull(run);
 		assertTrue(run.size()>0);
+	}
+	
+	@Test(expected = NotFoundException.class)
+	public void notFoundException() {
+	    timeSlotRepository.findTimeSlotByRank(10);
 	}
 	
 

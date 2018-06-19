@@ -9,6 +9,7 @@ import javax.annotation.PostConstruct;
 import org.springframework.stereotype.Component;
 
 import tr.com.metu.ramazan.excel.Constants;
+import tr.com.metu.ramazan.exception.NotFoundException;
 import tr.com.metu.ramazan.model.TimeSlot;
 
 @Component
@@ -32,7 +33,7 @@ public class TimeSlotRepository {
 		return timeSlots.stream()
 				.filter(timeSlot -> timeSlot.getRank().equals(rank))
 				.findFirst()
-				.orElseThrow(() -> new RuntimeException("Couldn't find time slot by rank: "+rank));
+				.orElseThrow(() -> new NotFoundException("Couldn't find time slot by rank: "+rank));
 	}
 
 }
