@@ -18,10 +18,14 @@ public class BasketTypeRepository {
 	private void init() {
 		basketTypes = new ArrayList<>();
 
+//		basketTypes.add(new BasketType(1, 6));
+//		basketTypes.add(new BasketType(2, 4));
+//		basketTypes.add(new BasketType(3,3));
+//		basketTypes.add(new BasketType(4, 2));
 		basketTypes.add(new BasketType(1, 6));
-		basketTypes.add(new BasketType(2, 4));
-		basketTypes.add(new BasketType(3,3));
-		basketTypes.add(new BasketType(4, 2));
+		basketTypes.add(new BasketType(2, 6));
+		basketTypes.add(new BasketType(3,6));
+		basketTypes.add(new BasketType(4, 6));
 	}
 
 	public BasketType findBasketTypeById(Integer id) {
