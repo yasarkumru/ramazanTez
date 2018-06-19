@@ -63,9 +63,4 @@ public class TimeSlot {
             throw new NotFoundException("Cannot find specified tour in time slot!!!");
     }
 
-    @Override
-    public String toString() {
-        return "TimeSlot: " + getTourCount();
-    }
-
 }

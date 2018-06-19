@@ -52,7 +52,7 @@ public class Tour {
     }
 
     public boolean isAddable(Demand demand) {
-        if (demand.getProduct().getBasketType() != basketType)
+        if (!demand.getProduct().getBasketType().equals(basketType))
             return false;
         return this.getBasketCount() + demand.getBasketCount() <= getMaxCarriedBasketSize();
     }
@@ -102,10 +102,4 @@ public class Tour {
     public int hashCode() {
         return this.id;
     }
-
-    @Override
-    public String toString() {
-        return "Tour: " + getBasketCount();
-    }
-
 }

@@ -12,6 +12,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import tr.com.metu.ramazan.RamazanTezMain;
+import tr.com.metu.ramazan.commands.Commands;
 import tr.com.metu.ramazan.model.Solution;
 import tr.com.metu.ramazan.repository.TimeSlotRepository;
 import tr.com.metu.ramazan.utils.CalculationService;
@@ -22,10 +23,13 @@ import tr.com.metu.ramazan.utils.CalculationService;
 public class CoverageTest {
 	
 	@Autowired TimeSlotRepository timeSlotRepository;
+	@Autowired Commands commands;
 
 	@Test
 	public void productConstruct() {
 	    List<Solution> run = CalculationService.run(new Solution(timeSlotRepository.getTimeSlots()));
+	    
+	    commands.run();
 	    
 	    run.get(0).toString();
 	    
